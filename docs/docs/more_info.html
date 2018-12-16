@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+
+
+<meta name="author" content="Sophie Crane, Annika Backer, Colette Puhala" />
+
+
+<title>More information</title>
+
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+
+
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+
+</head>
+
+<body>
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+  height: auto;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+</style>
+
+
+<style type="text/css">
+/* padding for bootstrap navbar */
+body {
+  padding-top: 51px;
+  padding-bottom: 40px;
+}
+/* offset scroll position for anchor links (for fixed navbar)  */
+.section h1 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+
+.section h2 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h3 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h4 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h5 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h6 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+</style>
+
+<script>
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.parent().addClass('active');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+});
+</script>
+
+
+<div class="container-fluid main-container">
+
+<!-- tabsets -->
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+</script>
+
+<!-- code folding -->
+
+
+
+
+<script>
+$(document).ready(function ()  {
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_').toLowerCase();
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+  padding-left: 25px;
+  text-indent: 0;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row-fluid">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">Final Project Title</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">Blogpost</a>
+</li>
+<li>
+  <a href="more_info.html">More info</a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div class="fluid-row" id="header">
+
+
+
+<h1 class="title toc-ignore">More information</h1>
+<h4 class="author"><em>Sophie Crane, Annika Backer, Colette Puhala</em></h4>
+<h4 class="date"><em>Last updated on 2018-12-16</em></h4>
+
+</div>
+
+
+<div id="more-information" class="section level1">
+<h1>More Information</h1>
+<p>Students who attend private schools usually have smaller class sizes<a href="#fn1" class="footnoteRef" id="fnref1"><sup>1</sup></a>, which means they can be given more individual attention by the teacher than students in large class sizes. Those who can afford tuition are also more likely to be able to afford outside tutors if they need them.</p>
+<p>AP courses have been known to be more concentrated in higher income counties, resulting in a push to implement more courses in low-income areas. Middle and high-income students are three times more likely to enroll<a href="#fn2" class="footnoteRef" id="fnref2"><sup>2</sup></a> in at least one AP courses if offered at their school. Many enroll in the course aware of the costs that lie ahead, specifically the opportunity costs and cost of taking the exam at the end. When enrolling in AP courses, students see it as an automatic opportunity to gain college credit and hopefully save money down the line. In reality, that is not always the case, and some schools do not accept AP scores for credit without a supplemental exam while others just use the credit towards introductory courses.</p>
+<p>Going back to the cost of taking an AP exam, the college board offers fee waivers, but many students are unaware of this. Some students, aware of the fee waiver, still do not have the funds to pay the remaining balance of $53 per exam<a href="#fn3" class="footnoteRef" id="fnref3"><sup>3</sup></a>. The marketing of AP exams itself poses additional problems, as the benefits overwhelmingly target low income students. The College Board boasts that AP exams can help students save money on college credits and boost college applications<a href="#fn4" class="footnoteRef" id="fnref4"><sup>4</sup></a>, which are major pulls for those at an economic disadvantage. Yet, at the same time, these students have been shown to struggle the most with AP scores; coupled with the current $53-94 per exam price tag, it seems that low-income students are at a systematic disadvantage.</p>
+<p><img src="more_info_files/figure-html/unnamed-chunk-2-1.png" width="768" /></p>
+</div>
+<div id="states-with-the-highest-pass-rates" class="section level1">
+<h1>States with the Highest Pass Rates</h1>
+<p>We selected the top 10 states with the highest pass rates on the AP computer science exam. In total, these 10 states had 6,758 students actually taking the exam, with 5,181 students earning a pass score. This constitutes to an over 76% pass rate in this states alone. Alaska was a rarity in the fact that 100% of the 21 students who took the exam passed. California, out of all 50 states, had the largest number of students take and pass the exam. As we mentioned earlier, this is not unexpected due to the size of California and the booming tech industry fueled by Silicon Valley, resulting in a medium income of $94,572<a href="#fn5" class="footnoteRef" id="fnref5"><sup>5</sup></a>, resulting in an increased fascination towards the tech industry. Another thing to note, is the reputation for public schools in California is not the greatest. Many parents as a result choose to send their kids to private schools, which tend to have more established AP programs. Vermont, a state with the second smallest population in the US, had a pass rate of over 82%, keeping in mind only 47 students took the exam.</p>
+<p><img src="more_info_files/figure-html/unnamed-chunk-3-1.png" width="768" /></p>
+</div>
+<div id="states-with-the-lowest-pass-rates" class="section level1">
+<h1>States with the Lowest Pass Rates</h1>
+<p>Next, we selected the 10 states with the lowest pass rates on the AP computer science exam. In total, these 10 states had 3,454 students actually taking the exam, with 1,644 students earning a pass score. This constitutes to a pass rate just shy of 48%. One of states included in this count was South Dakota, that recorded that 33 students completed the exam but failed to mention how many actually passed. Out of all the states, Montana had the lowest number of students take the exam, with only 11 and only 6 passed. Florida, with the third highest population in the US, had a pass rate of only 43% and Georgia, with the eight highest population in the US, having a pass rate of 51%. Two of the largest states in the country, and only one managed to earn a pass rate over 50 percent, specifically a state with one the country best technical institutes.</p>
+</div>
+<div id="where-the-data-comes-from" class="section level1">
+<h1>Where The Data Comes From</h1>
+<p>The data for the AP Computer Science courses was gathered by The Institute for Computing Education at Georgia Tech and was originally from the AP Data Overview from College Board. It included information on the number of females, black, and hispanic students who took and who passed the exam by state and by year. There was some missing data from South Dakota, Mississippi, and zero people from Wyoming took the test.</p>
+<p>The income data came from the US Census so it is describing the income levels in 2010. This is a 3 year difference from when the AP Computer Science data was collected, but we don’t think it should affect the data. It includes the percents of different income levels by state.</p>
+</div>
+<div id="possible-errors" class="section level1">
+<h1>Possible Errors</h1>
+<p>Some sources of error could have come from certain states having less people take the test depending on the population or the focus on technology. For example, California had almost 5,000 people take the test which isn’t surprising because it is so focused on the tech industry. Or Georgia had a lower percentage of people pass the test than Alabama but had 1261 take the test versus Alabama which had 126 take the test.</p>
+</div>
+<div class="footnotes">
+<hr />
+<ol>
+<li id="fn1"><p><a href="https://nces.ed.gov/pubs97/97983.pdf" target="_blank">Public Schools and Private Schools: How do they Differ?</a>, National Center for Education Statistics, July 1997.<a href="#fnref1">↩</a></p></li>
+<li id="fn2"><p><a href="https://www.edweek.org/ew/articles/2017/03/01/numbers-of-ap-test-takers-continue-to-rise.html" target="_blank">Number of AP Test-Takers Continue to Rise</a>, Education Week, February 28, 2017.<a href="#fnref2">↩</a></p></li>
+<li id="fn3"><p><a href="https://apstudent.collegeboard.org/exploreap/the-rewards" target="_blank">Work Toward College Success</a>, AP College Board.<a href="#fnref3">↩</a></p></li>
+<li id="fn4"><p><a href="https://apstudent.collegeboard.org/exploreap/the-rewards" target="_blank">Work Toward College Success</a>, AP College Board.<a href="#fnref4">↩</a></p></li>
+<li id="fn5"><p><a href="https://www.bizjournals.com/sanjose/news/2014/09/24/silicon-valley-median-income-now-94-572-43-higher.html" target="_blank">Silicon Valley median income now $94,572 — 43% higher than the typical U.S. household</a>, Silicon Valley Business Journal, September 25, 2014.<a href="#fnref5">↩</a></p></li>
+</ol>
+</div>
+
+
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
