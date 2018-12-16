@@ -1,6 +1,6 @@
 ---
-title: "My Website"
-author: "Sophie Crane"
+title: "Let’s C(S) if Income Affects AP Scores"
+author: "Sophie Crane, Annika Backer, Colette Puhala"
 date: "Last updated on `r Sys.Date()`"
 output:
   html_document:
@@ -9,26 +9,76 @@ output:
     toc_float: true
     df_print: kable
 ---
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+# Set R Markdown chunk defaults:
+knitr::opts_chunk$set(
+  echo = FALSE, message = FALSE, warning = FALSE, 
+  fig.width = 16/2, fig.height = 9/2
+)
 
-<!--
-Comments in HTML are like this! 
--->
-
-
-Hello, Website!
-
-# My first section
-
-```{r}
-library(ggplot2)
-ggplot(mtcars, aes(x=cyl, y= mpg)) +
-  geom_point() +
-  labs(x= "Number of cylinders", y = "Miles per gallon")
 ```
+#Introduction
+A major in Computer Science results in one of the highest salaries, with graduates having an average entry-level salary of $65,900^[[Which Computer Science Jobs Have the Highest Salaries ](https://appliedcomputing.wisconsin.edu/about-applied-computing/computer-science-salary/){target="_blank"}, University of Wisconsin.  ] and people at the height of their career making an average of $110,100 ^[[Which Computer Science Jobs Have the Highest Salaries ](https://appliedcomputing.wisconsin.edu/about-applied-computing/computer-science-salary/){target="_blank"}, University of Wisconsin.]. But high school students who don’t have access to Computer Science courses may not see it as a viable path because they don’t feel that they have the tools to succeed. This is especially harmful to students from lower income families, because while they would benefit the most from obtaining a well paying job, they also have the most obstacles stopping them from achieving this goal. We want to look at if income has an impact on the percent of people who pass their AP Computer Science tests.
 
+In the grand scheme of things, income does have an impact on AP test scores. In 2017, the price of each AP exam administered in the U.S. was $94, and this was a $2 increase in price from 2016. Access to AP exam testing puts low-income students at a severe disadvantage. Statewide, one in 10 ^[[Access to AP Courses Often Elusive for Low-Income Students ](https://ctmirror.org/2018/05/14/advanced-placement-debate-open-closed-gate/){target="_blank"}, The CT Mirror, May 14, 2018.] students from low-income homes will take an AP course, compared to one in 4 students from medium to high income homes. This is just looking at taking the courses, but how does the stat change when it comes to taking the AP exam?  Over 1.1 million students^[[Number of AP Test-Takers Continue to Rise ](https://www.edweek.org/ew/articles/2017/03/01/numbers-of-ap-test-takers-continue-to-rise.html){target="_blank"}, Education Week, February 28, 2017. ] take at least one AP exam a year in the U.S. alone, and of that number, more than 554,500 test-takers were categorized as low-income.
 
-# My second section
+#Percent who Passed the AP CS Test by State
 
 ```{r}
-head(mtcars)
+# Loaded all necessary packages
+library(tidyverse)
+library(leaflet)
+library(sf)
+library(fivethirtyeight)
+library(readxl)
+library(ggplot2)
+library(USAboundaries)
+library(maps)
+
+#Loading data and filtering to only 2013
+Household_Income <- read_excel("Household Income Distribution by State.xlsx")
+Household_Income <- Household_Income  %>%
+  filter(Year == 2013)
+
+AP_Scores <- read.csv("pass_12_13.csv")
+AP_Scores <- AP_Scores %>%
+  filter(year == 2013)
+
+#Selecting only necessary data, filtering out missing data, and changing data types
+AP_Scores_Map <- AP_Scores %>%
+  select(state, passed, total) %>%
+  filter(passed != "*", passed != "") %>%
+  mutate(
+    total = as.numeric(as.character(total)),
+    passed = as.numeric(as.character(passed)),
+    state = as.character(state),
+    state = tolower(state)
+  )
+
+#Changing names of states so that they match between AP_Scores_Map and USA_sf
+AP_Scores_Map[10, "state"] <- "massachusetts"
+AP_Scores_Map[23, "state"] <- "tennessee"
+
+#Getting the percent that passed from passed / total who took the test
+AP_Scores_Map <- AP_Scores_Map %>%
+  mutate(percent_passed = (passed / total))
+
+#Loading USA map
+USA_sf <- maps::map("state", plot = FALSE, fill = TRUE) %>%
+  sf::st_as_sf() %>% 
+  sf::st_transform(4326) 
+
+
+#Joining AP_Scores_Map and USA_sf
+AP_Scores_Map_2 <- full_join(USA_sf, AP_Scores_Map, by=c("ID" = "state"))
+  
+#Plotting the percent that passed on USA map by state                           
+ggplot(AP_Scores_Map_2) +
+  geom_sf(aes(fill = percent_passed))+
+  labs(x = "Longitude", y = "Latitude", title = "Percent Who Passed the AP CS Test By State") 
+
+AP_Scores_Income <- AP_Scores %>%
+  inner_join(Household_Income, by = c("state" = "State"))%>%
+  select(-year)
+
 ```
